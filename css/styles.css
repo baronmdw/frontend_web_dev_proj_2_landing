@@ -25,10 +25,6 @@
     position: fixed;
     height: 75px;
     width: 100vw;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    padding: 5px;
 }
 
 .cards-container{
@@ -42,6 +38,14 @@
     grid-area: cont;
 }
 
+ul{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 100%;
+    padding: 5px;
+}
+
 @media (min-width: 750px) {
     .content-container{
         grid-template-columns: 75px 1fr;
@@ -51,9 +55,16 @@
     }
 
     .navbar{
-        flex-direction: column;
         height: 100vh;
         position: fixed;
         width: 75px;
+    }
+
+    ul{
+        flex-direction: column;
+    }
+
+    li{
+        width: 100%;
     }
 }

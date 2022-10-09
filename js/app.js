@@ -4,13 +4,15 @@ function setupNavbar() {
     const chapters = document.querySelectorAll(".card");
     const navbarWrapper = document.querySelector(".navbar");
     // TODO: Performance optimization
+    let navBarList = document.createElement("ul");
     for (const chapter of chapters) {
-        let addingElement = document.createElement("div");
+        let addingElement = document.createElement("li");
         addingElement.classList.add("navbar-element");
         addingElement.innerText = chapter.firstElementChild.textContent
-        navbarWrapper.appendChild(addingElement);
+        navBarList.appendChild(addingElement);
         addingElement.addEventListener('click',navbarElementClicked);
     };
+    navbarWrapper.appendChild(navBarList);
     let t2 = performance.now();
     console.log(t2-t1);
 }
