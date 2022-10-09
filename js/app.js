@@ -34,4 +34,4 @@ function navbarElementClicked(event) {
     console.log(t2-t1);
 }
 
-setupNavbar();
+document.addEventListener('DOMContentLoaded', setupNavbar());
