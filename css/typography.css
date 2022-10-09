@@ -1,0 +1,17 @@
+*{
+    font-family: 'Mukta', sans-serif;
+}
+
+.orange{
+    color: rgba(247, 58, 0, 0.8);
+}
+
+h1{
+    margin-block-end: 0; 
+    margin-left: 5px;   
+}
+
+p{
+    margin-block-start: 0;
+    margin-left: 10px;
+}

@@ -1,1 +1,59 @@
 @import url("./background_styling.css");
+@import url("./elements_styling.css");
+@import url("./typography.css");
+
+/* .box{
+    border: 2px solid black;
+} */
+
+*{
+    box-sizing: border-box;
+}
+
+.content-container{
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 75px repeat(4, 1fr);
+    grid-gap: 20px;
+    grid-template-areas:
+        "nb"
+        "cont";
+}
+
+.navbar{
+    position: fixed;
+    height: 75px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 5px;
+}
+
+.cards-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 5px;
+    grid-area: cont;
+}
+
+@media (min-width: 750px) {
+    .content-container{
+        grid-template-columns: 75px 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+            "nb cont";
+    }
+
+    .navbar{
+        flex-direction: column;
+        height: 100vh;
+        position: fixed;
+        width: 75px;
+    }
+}
