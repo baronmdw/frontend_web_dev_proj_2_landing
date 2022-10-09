@@ -25,3 +25,9 @@
     background-color: rgba(247, 58, 0, 0.8);
     color: #ffe;
 }
+
+ul{
+    /* Style so that navbar elements fill navbar completely */
+    padding: 0;
+    margin: 0;
+}
