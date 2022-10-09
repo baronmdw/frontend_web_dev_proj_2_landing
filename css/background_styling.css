@@ -1,0 +1,7 @@
+body {
+    background-image: linear-gradient(#bbb,#999);
+    height: 1000px;
+    width: 1fr;
+    margin: 0;
+    padding: 0;
+}
