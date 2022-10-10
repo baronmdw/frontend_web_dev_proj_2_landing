@@ -27,6 +27,7 @@ function selectRelevantCard(clickedElement,wasClicked) {
         if (compareText === clickedText & wasClicked===false ) {
             element.classList.add("highlight");
             element.firstElementChild.classList.add("highlight-heading");
+            element.scrollIntoView({behavior: "smooth"});
         } else {
             element.classList.remove("highlight");
             element.firstElementChild.classList.remove("highlight-heading");
