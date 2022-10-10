@@ -1,3 +1,5 @@
+let noAutoScroll = true;
+
 function setupNavbar() {
     // After initiating the DOM this function collects all card-headings and adds a navbar element for each
     let t1 = performance.now();
@@ -44,7 +46,9 @@ function selectRelevantCard(clickedElement,wasClicked) {
 
 function navbarElementClicked(event) {
     // This function checks which element was clicked, deactivates all other navbar elements and toggles the one that was clicked
+    // TODO: make sure that after fast clicks nothing gets tangled
     event.preventDefault();
+    noAutoScroll = false;
     const t1 = performance.now()
     const clickedElement = event.target;
     const parentElement = clickedElement.parentElement;
@@ -57,6 +61,7 @@ function navbarElementClicked(event) {
         clickedElement.classList.add("highlight");
     };
     selectRelevantCard(clickedElement,wasClicked);
+    setTimeout(() => {noAutoScroll = true}, 800);
     let t2 = performance.now();
     console.log(t2-t1);
 }
@@ -79,30 +84,32 @@ function checkview() {
 
 document.addEventListener("DOMContentLoaded", setupNavbar());
 window.addEventListener("scroll", () => {
-    setTimeout(1);
-    console.log('scroll');
-    const elements = document.querySelectorAll(".card");
-    let topGap = 75;
-    if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
-        topGap = 0;
-    };
-    for (const element of elements) {
-        const titleText = element.firstElementChild.textContent;
-        const listElements = document.querySelector('ul');
-        if (element.getBoundingClientRect().top-topGap > 0 & element.getBoundingClientRect().bottom <= window.innerHeight) {
-            element.classList.add("highlight");
-            element.firstElementChild.classList.add("highlight-heading");
-            for (const listElement of listElements.children) {
-                if (listElement.textContent === titleText) {
-                    listElement.classList.add("highlight");
+    if(noAutoScroll){
+        const elements = document.querySelectorAll(".card");
+        let topGap = 75;
+        if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
+            topGap = 0;
+        };
+        // TODO: detect active card on narrow device
+        // TODO: avoid function during autoscroll
+        for (const element of elements) {
+            const titleText = element.firstElementChild.textContent;
+            const listElements = document.querySelector('ul');
+            if ((element.getBoundingClientRect().top-topGap > 0 & element.getBoundingClientRect().bottom <= window.innerHeight) | (topGap == 75 & (element.getBoundingClientRect().top-topGap > -1000 & element.getBoundingClientRect().bottom <= 2000))) {
+                element.classList.add("highlight");
+                element.firstElementChild.classList.add("highlight-heading");
+                for (const listElement of listElements.children) {
+                    if (listElement.textContent === titleText) {
+                        listElement.classList.add("highlight");
+                    };
                 };
-            };
-        } else {
-            element.classList.remove("highlight");
-            element.firstElementChild.classList.remove("highlight-heading");
-            for (const listElement of listElements.children) {
-                if (listElement.textContent === titleText) {
-                    listElement.classList.remove("highlight");
+            } else {
+                element.classList.remove("highlight");
+                element.firstElementChild.classList.remove("highlight-heading");
+                for (const listElement of listElements.children) {
+                    if (listElement.textContent === titleText) {
+                        listElement.classList.remove("highlight");
+                    };
                 };
             };
         };
