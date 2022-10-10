@@ -17,8 +17,28 @@ function setupNavbar() {
     console.log(t2-t1);
 }
 
+function selectRelevantCard(clickedElement,wasClicked) {
+    // This function highlights the card corresponding to the clicked section and de-highlights if not selected
+    const t1 = performance.now();
+    const elements = document.querySelectorAll('.card');
+    const clickedText = clickedElement.textContent;
+    for (const element of elements) {
+        const compareText = element.firstElementChild.textContent;
+        if (compareText === clickedText & wasClicked===false ) {
+            element.classList.add("highlight");
+            element.firstElementChild.classList.add("highlight-heading");
+        } else {
+            element.classList.remove("highlight");
+            element.firstElementChild.classList.remove("highlight-heading");
+        };
+    };
+    const t2 = performance.now();
+    console.log(t2-t1);
+}
+
 function navbarElementClicked(event) {
     // This function checks which element was clicked, deactivates all other navbar elements and toggles the one that was clicked
+    event.preventDefault();
     const t1 = performance.now()
     const clickedElement = event.target;
     const parentElement = clickedElement.parentElement;
@@ -30,18 +50,7 @@ function navbarElementClicked(event) {
     if (wasClicked === false) {
         clickedElement.classList.add("highlight");
     };
-        const elements = document.querySelectorAll('.card');
-        const clickedText = clickedElement.textContent;
-        for (const element of elements) {
-            const compareText = element.firstElementChild.textContent;
-            if (compareText === clickedText & wasClicked===false ) {
-                element.classList.add("highlight");
-                element.firstElementChild.classList.add("highlight-heading");
-            } else {
-                element.classList.remove("highlight");
-                element.firstElementChild.classList.remove("highlight-heading");
-            }
-        }
+    selectRelevantCard(clickedElement,wasClicked);
     let t2 = performance.now();
     console.log(t2-t1);
 }
