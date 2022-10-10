@@ -30,6 +30,18 @@ function navbarElementClicked(event) {
     if (wasClicked === false) {
         clickedElement.classList.add("highlight");
     };
+        const elements = document.querySelectorAll('.card');
+        const clickedText = clickedElement.textContent;
+        for (const element of elements) {
+            const compareText = element.firstElementChild.textContent;
+            if (compareText === clickedText & wasClicked===false ) {
+                element.classList.add("highlight");
+                element.firstElementChild.classList.add("highlight-heading");
+            } else {
+                element.classList.remove("highlight");
+                element.firstElementChild.classList.remove("highlight-heading");
+            }
+        }
     let t2 = performance.now();
     console.log(t2-t1);
 }
