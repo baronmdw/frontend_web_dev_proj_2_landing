@@ -61,4 +61,50 @@ function navbarElementClicked(event) {
     console.log(t2-t1);
 }
 
-document.addEventListener('DOMContentLoaded', setupNavbar());
+function checkview() {
+    console.log('scroll');
+    const elements = document.querySelectorAll(".card");
+    let topGap = 75;
+    if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
+        topGap = 0;
+    };
+    console.log(topGap)
+    for (const element of elements) {
+        console.log(element.firstElementChild.textContent);
+        if (element.getBoundingClientRect().top-topGap < 5 & element.getBoundingClientRect().top-topGap>-2) {
+            console.log(element.firstElementChild.textContent + "is in the focus");
+        }
+    };
+}
+
+document.addEventListener("DOMContentLoaded", setupNavbar());
+window.addEventListener("scroll", () => {
+    setTimeout(1);
+    console.log('scroll');
+    const elements = document.querySelectorAll(".card");
+    let topGap = 75;
+    if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
+        topGap = 0;
+    };
+    for (const element of elements) {
+        const titleText = element.firstElementChild.textContent;
+        const listElements = document.querySelector('ul');
+        if (element.getBoundingClientRect().top-topGap > 0 & element.getBoundingClientRect().bottom <= window.innerHeight) {
+            element.classList.add("highlight");
+            element.firstElementChild.classList.add("highlight-heading");
+            for (const listElement of listElements.children) {
+                if (listElement.textContent === titleText) {
+                    listElement.classList.add("highlight");
+                };
+            };
+        } else {
+            element.classList.remove("highlight");
+            element.firstElementChild.classList.remove("highlight-heading");
+            for (const listElement of listElements.children) {
+                if (listElement.textContent === titleText) {
+                    listElement.classList.remove("highlight");
+                };
+            };
+        };
+    };
+});
