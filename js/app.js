@@ -27,7 +27,12 @@ function selectRelevantCard(clickedElement,wasClicked) {
         if (compareText === clickedText & wasClicked===false ) {
             element.classList.add("highlight");
             element.firstElementChild.classList.add("highlight-heading");
-            element.scrollIntoView({behavior: "smooth"});
+            if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
+                element.scrollIntoView({behavior: "smooth"});
+            } else {
+                const topSide = element.offsetTop;
+                window.scroll({top: topSide-75, behavior: "smooth"});
+            };
         } else {
             element.classList.remove("highlight");
             element.firstElementChild.classList.remove("highlight-heading");
