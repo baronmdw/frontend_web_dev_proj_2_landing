@@ -2,10 +2,8 @@ let noAutoScroll = true;
 
 function setupNavbar() {
     // After initiating the DOM this function collects all card-headings and adds a navbar element for each
-    let t1 = performance.now();
     const chapters = document.querySelectorAll(".card");
     const navbarWrapper = document.querySelector(".navbar");
-    // TODO: Performance optimization
     let navBarList = document.createElement("ul");
     for (const chapter of chapters) {
         let addingElement = document.createElement("li");
@@ -15,13 +13,10 @@ function setupNavbar() {
         addingElement.addEventListener('click',navbarElementClicked);
     };
     navbarWrapper.appendChild(navBarList);
-    let t2 = performance.now();
-    console.log(t2-t1);
 }
 
 function selectRelevantCard(clickedElement,wasClicked) {
     // This function highlights the card corresponding to the clicked section and de-highlights if not selected
-    const t1 = performance.now();
     const elements = document.querySelectorAll('.card');
     const clickedText = clickedElement.textContent;
     for (const element of elements) {
@@ -40,20 +35,15 @@ function selectRelevantCard(clickedElement,wasClicked) {
             element.firstElementChild.classList.remove("highlight-heading");
         };
     };
-    const t2 = performance.now();
-    console.log(t2-t1);
 }
 
 function navbarElementClicked(event) {
-    // This function checks which element was clicked, deactivates all other navbar elements and toggles the one that was clicked
-    // TODO: make sure that after fast clicks nothing gets tangled
+    // This function activates upon click event and checks which element was clicked, deactivates all other navbar elements and toggles the one that was clicked
     event.preventDefault();
     noAutoScroll = false;
-    const t1 = performance.now()
     const clickedElement = event.target;
     const parentElement = clickedElement.parentElement;
     const wasClicked = clickedElement.classList.contains("highlight");
-    // TODO: Performance optimization
     for (const child of parentElement.children) {
         child.classList.remove("highlight")
     };
@@ -62,36 +52,18 @@ function navbarElementClicked(event) {
     };
     selectRelevantCard(clickedElement,wasClicked);
     setTimeout(() => {noAutoScroll = true}, 800);
-    let t2 = performance.now();
-    console.log(t2-t1);
-}
-
-function checkview() {
-    console.log('scroll');
-    const elements = document.querySelectorAll(".card");
-    let topGap = 75;
-    if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
-        topGap = 0;
-    };
-    console.log(topGap)
-    for (const element of elements) {
-        console.log(element.firstElementChild.textContent);
-        if (element.getBoundingClientRect().top-topGap < 5 & element.getBoundingClientRect().top-topGap>-2) {
-            console.log(element.firstElementChild.textContent + "is in the focus");
-        }
-    };
 }
 
 document.addEventListener("DOMContentLoaded", setupNavbar());
 window.addEventListener("scroll", () => {
+    // inline definition because it wouldn't work conistently with calling an external function -> would have been a performance issue?
+    // This function checks which cars are scrolled into viewport and hightlights them and their corresponding link in the navbar
     if(noAutoScroll){
         const elements = document.querySelectorAll(".card");
         let topGap = 75;
         if (document.querySelector('.navbar').getBoundingClientRect().height !== 75) {
             topGap = 0;
         };
-        // TODO: detect active card on narrow device
-        // TODO: avoid function during autoscroll
         for (const element of elements) {
             const titleText = element.firstElementChild.textContent;
             const listElements = document.querySelector('ul');
